@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistencehttp://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="formation"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+		<class>sopra.promo404.formation.model.Matiere</class>
+		<class>sopra.promo404.formation.model.Eleve</class>
+		<class>sopra.promo404.formation.model.Formateur</class>
+		<class>sopra.promo404.formation.model.Formation</class>
+		<class>sopra.promo404.formation.model.Ordinateur</class>
+		<class>sopra.promo404.formation.model.Personne</class>
+
+		<properties>
+			<property name="hibernate.connection.url"
+				value="jdbc:postgresql://localhost:5432/formation-jpa" />
+			<property name="hibernate.connection.driver"
+				value="org.postgresql.Driver" />
+			<property name="hibernate.connection.user" value="postgres" />
+			<property name="hibernate.connection.password" value="admin" />
+
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.PostgreSQL94Dialect" />
+
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
