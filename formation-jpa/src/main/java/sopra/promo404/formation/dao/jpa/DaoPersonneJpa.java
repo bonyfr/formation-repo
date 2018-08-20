@@ -13,6 +13,7 @@ import sopra.promo404.formation.Application;
 import sopra.promo404.formation.dao.IDaoPersonne;
 import sopra.promo404.formation.model.Civilite;
 import sopra.promo404.formation.model.Eleve;
+import sopra.promo404.formation.model.Formateur;
 import sopra.promo404.formation.model.Personne;
 
 public class DaoPersonneJpa implements IDaoPersonne {
@@ -203,11 +204,11 @@ public class DaoPersonneJpa implements IDaoPersonne {
 			tx.begin();
 
 			Query query = em.createQuery("select e from Eleve e where upper(e.adresse.ville) = ?1");
-			
+
 			query.setParameter(1, ville.toUpperCase());
-			
+
 			liste = query.getResultList();
-			
+
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -236,11 +237,11 @@ public class DaoPersonneJpa implements IDaoPersonne {
 			tx.begin();
 
 			Query query = em.createQuery("select e from Eleve e where e.dtNaissance = :maDate");
-			
+
 			query.setParameter("maDate", dt, TemporalType.DATE);
-			
+
 			liste = query.getResultList();
-			
+
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -254,5 +255,40 @@ public class DaoPersonneJpa implements IDaoPersonne {
 		}
 
 		return liste;
+	}
+
+	@Override
+	public Formateur findFormateurByNomAndPrenom(String nom, String prenom) {
+		Formateur entity = null;
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select f from Formateur f where f.nom = :nom and f.prenom = :prenom",
+					Formateur.class);
+
+			query.setParameter("nom", nom);
+			query.setParameter("prenom", prenom);
+
+			entity = (Formateur) query.getSingleResult();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return entity;
 	}
 }

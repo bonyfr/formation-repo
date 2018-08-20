@@ -153,4 +153,38 @@ public class DaoFormationJpa implements IDaoFormation {
 			}
 		}
 	}
+
+	@Override
+	public Formation findByClientAndPromotion(String client, String promotion) {
+		Formation entity = null;
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select f from Formation f where f.id.client = ?1 and f.id.promotion = ?2");
+
+			query.setParameter(1, client);
+			query.setParameter(2, promotion);
+			
+			entity = (Formation) query.getSingleResult();
+			
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return entity;
+	}
 }

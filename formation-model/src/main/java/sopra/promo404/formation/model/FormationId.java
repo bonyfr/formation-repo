@@ -70,4 +70,9 @@ public class FormationId implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "FormationId [client=" + client + ", promotion=" + promotion + "]";
+	}
+
 }

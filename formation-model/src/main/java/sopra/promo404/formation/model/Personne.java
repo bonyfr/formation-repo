@@ -10,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="person")
+@Table(name = "person", uniqueConstraints = @UniqueConstraint(columnNames = { "lastname", "firstname" }))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "disc", discriminatorType = DiscriminatorType.STRING, length = 20)
 public abstract class Personne {

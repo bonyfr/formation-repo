@@ -67,4 +67,11 @@ public class Formation {
 	public void removeMatiere(Matiere matiere) {
 		this.matieres.remove(matiere);
 	}
+
+	@Override
+	public String toString() {
+		return "Formation [id=" + id + ", duree=" + duree + "]";
+	}
+	
+	
 }
