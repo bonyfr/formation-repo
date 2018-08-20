@@ -152,4 +152,70 @@ public class DaoOrdinateurJpa implements IDaoOrdinateur {
 			}
 		}
 	}
+
+	@Override
+	public List<Ordinateur> findAllBySsd(boolean ssd) {
+		List<Ordinateur> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select o from Ordinateur o where o.ssd = :paramSsd", Ordinateur.class);
+			
+			query.setParameter("paramSsd", ssd);
+			
+			liste = query.getResultList();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
+	}
+
+	@Override
+	public List<Ordinateur> findAllStartingByCode(String code) {
+		List<Ordinateur> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select o from Ordinateur o where o.code like :recherche", Ordinateur.class);
+			
+			query.setParameter("recherche", code+"%");
+			
+			liste = query.getResultList();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
+	}
 }

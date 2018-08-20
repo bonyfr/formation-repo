@@ -1,11 +1,13 @@
 package sopra.promo404.formation.dao.jpa;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 import sopra.promo404.formation.Application;
 import sopra.promo404.formation.dao.IDaoPersonne;
@@ -168,11 +170,77 @@ public class DaoPersonneJpa implements IDaoPersonne {
 			tx.begin();
 
 			Query query = em.createNamedQuery("Eleve.findAllByCivilite");
-			
+
 			query.setParameter("civilite", civilite);
-			
+
 			liste = query.getResultList();
 
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
+	}
+
+	@Override
+	public List<Eleve> findAllEleveByVille(String ville) {
+		List<Eleve> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select e from Eleve e where upper(e.adresse.ville) = ?1");
+			
+			query.setParameter(1, ville.toUpperCase());
+			
+			liste = query.getResultList();
+			
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
+	}
+
+	@Override
+	public List<Eleve> findAllEleveByDtNaissance(Date dt) {
+		List<Eleve> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select e from Eleve e where e.dtNaissance = :maDate");
+			
+			query.setParameter("maDate", dt, TemporalType.DATE);
+			
+			liste = query.getResultList();
+			
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
