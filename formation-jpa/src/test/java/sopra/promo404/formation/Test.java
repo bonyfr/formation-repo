@@ -50,6 +50,10 @@ public class Test {
 		
 		daoFormation.save(promo404);
 		
+		unix.setDifficulte(Difficulte.DIFFICILE);
+		
+		daoMatiere.save(unix);
+		
 		Formateur eric = new Formateur("SULTAN", "Eric", true, 20);
 		eric.setAdresse(new Adresse("1 rue de la Paix", "75001", "Paris", "France"));
 		eric.addMatiere(unix);

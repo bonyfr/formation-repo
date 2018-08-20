@@ -9,6 +9,8 @@ import javax.persistence.Query;
 
 import sopra.promo404.formation.Application;
 import sopra.promo404.formation.dao.IDaoPersonne;
+import sopra.promo404.formation.model.Civilite;
+import sopra.promo404.formation.model.Eleve;
 import sopra.promo404.formation.model.Personne;
 
 public class DaoPersonneJpa implements IDaoPersonne {
@@ -151,5 +153,38 @@ public class DaoPersonneJpa implements IDaoPersonne {
 				em.close();
 			}
 		}
+	}
+
+	@Override
+	public List<Eleve> findAllEleveByCivilite(Civilite civilite) {
+		List<Eleve> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createNamedQuery("Eleve.findAllByCivilite");
+			
+			query.setParameter("civilite", civilite);
+			
+			liste = query.getResultList();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
 	}
 }

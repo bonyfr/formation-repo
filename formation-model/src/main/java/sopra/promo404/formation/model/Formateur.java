@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -18,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 public class Formateur extends Personne {
 	private boolean referent;
 	private int experience;
-	@OneToMany(mappedBy = "formateur")
+	@OneToMany(mappedBy = "formateur", fetch=FetchType.LAZY)
 	private List<Eleve> eleves = new ArrayList<>();
 	@ManyToMany
 	@JoinTable(name = "person_subject", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"), uniqueConstraints = @UniqueConstraint(columnNames = {

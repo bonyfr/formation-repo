@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>sopra.promo404</groupId>
-	<artifactId>formation-jpa</artifactId>
+	<artifactId>formation-jpa-ref</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.1-SNAPSHOT</version>
 	<name>formation-jpa</name>
 	<url>http://maven.apache.org</url>
 
@@ -17,8 +17,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>sopra.promo404</groupId>
-			<artifactId>formation-model</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<artifactId>formation-model-ref</artifactId>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>

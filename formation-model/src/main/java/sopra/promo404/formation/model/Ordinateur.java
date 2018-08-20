@@ -2,6 +2,7 @@ package sopra.promo404.formation.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -14,7 +15,7 @@ public class Ordinateur {
 	private String code;
 	private int ram;
 	private boolean ssd;
-	@OneToOne(mappedBy="ordinateur")
+	@OneToOne(mappedBy="ordinateur", fetch=FetchType.EAGER)
 	private Eleve eleve;
 
 	public Ordinateur() {

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -25,7 +26,7 @@ public class Matiere {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "difficulty", length = 20)
 	private Difficulte difficulte;
-	@ManyToMany(mappedBy = "matieres")
+	@ManyToMany(mappedBy = "matieres", fetch=FetchType.LAZY)
 	private List<Formateur> formateurs = new ArrayList<>();
 
 	public Matiere() {

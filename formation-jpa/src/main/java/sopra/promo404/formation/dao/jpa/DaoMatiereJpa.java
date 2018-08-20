@@ -56,6 +56,7 @@ public class DaoMatiereJpa implements IDaoMatiere {
 			tx.begin();
 
 			entity = em.find(Matiere.class, id);
+			entity.getFormateurs();
 
 			tx.commit();
 		} catch (Exception e) {
@@ -151,5 +152,36 @@ public class DaoMatiereJpa implements IDaoMatiere {
 				em.close();
 			}
 		}
+	}
+
+	@Override
+	public Matiere findByIdWithFormateurs(Long id) {
+		Matiere entity = null;
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select m from Matiere m join fetch m.formateurs where id = :id", Matiere.class);
+			query.setParameter("id", id);
+			
+			entity = (Matiere) query.getSingleResult();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+		
+		return entity;
 	}
 }
