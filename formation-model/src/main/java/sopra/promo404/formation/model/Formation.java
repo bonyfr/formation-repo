@@ -10,14 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "training")
 public class Formation {
 	@EmbeddedId
 	private FormationId id;
+	@Version
+	private int version;
 	@Column(name = "duration")
 	private int duree;
 	@ManyToMany
@@ -44,6 +46,14 @@ public class Formation {
 		this.id = id;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public int getDuree() {
 		return duree;
 	}
@@ -59,7 +69,7 @@ public class Formation {
 	public void setMatieres(List<Matiere> matieres) {
 		this.matieres = matieres;
 	}
-	
+
 	public void addMatiere(Matiere matiere) {
 		this.matieres.add(matiere);
 	}
@@ -72,6 +82,5 @@ public class Formation {
 	public String toString() {
 		return "Formation [id=" + id + ", duree=" + duree + "]";
 	}
-	
-	
+
 }

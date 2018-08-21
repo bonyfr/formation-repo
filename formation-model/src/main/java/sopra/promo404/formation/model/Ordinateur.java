@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "computer")
@@ -13,9 +14,11 @@ public class Ordinateur {
 	@Id
 	@Column(length = 20)
 	private String code;
+	@Version
+	private int version;
 	private int ram;
 	private boolean ssd;
-	@OneToOne(mappedBy="ordinateur", fetch=FetchType.EAGER)
+	@OneToOne(mappedBy = "ordinateur", fetch = FetchType.EAGER)
 	private Eleve eleve;
 
 	public Ordinateur() {
@@ -35,6 +38,14 @@ public class Ordinateur {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public int getRam() {

@@ -16,4 +16,8 @@ public interface IDaoPersonne extends IDao<Personne, Long> {
 	List<Eleve> findAllEleveByDtNaissance(Date dt);
 
 	Formateur findFormateurByNomAndPrenom(String nom, String prenom);
+	
+	Eleve findEleveByOrdinateur(String code);
+	
+	List<Formateur> findAllFormateurByFormation(String client, String promotion);
 }

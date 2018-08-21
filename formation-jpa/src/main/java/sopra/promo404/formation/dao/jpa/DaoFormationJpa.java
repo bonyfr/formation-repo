@@ -187,4 +187,37 @@ public class DaoFormationJpa implements IDaoFormation {
 
 		return entity;
 	}
+
+	@Override
+	public List<Formation> findAllByMatiere(String nom) {
+		List<Formation> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select f from Formation f join f.matieres m where m.nom = :nom", Formation.class);
+			
+			query.setParameter("nom", nom);
+			
+			liste = query.getResultList();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
+	}
 }

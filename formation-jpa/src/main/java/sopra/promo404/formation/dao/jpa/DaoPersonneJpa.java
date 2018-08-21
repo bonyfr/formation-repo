@@ -291,4 +291,83 @@ public class DaoPersonneJpa implements IDaoPersonne {
 
 		return entity;
 	}
+
+	@Override
+	public Eleve findEleveByOrdinateur(String code) {
+		Eleve entity = null;
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+			
+//			Query query = em.createQuery("select o.eleve from Ordinateur o where o.code = :codeOrdi", Eleve.class);
+
+//			Query query = em.createQuery("select e from Ordinateur o join o.eleve e where o.code = :codeOrdi", Eleve.class);
+
+//			Query query = em.createQuery("select e from Eleve e join e.ordinateur o where o.code = :codeOrdi", Eleve.class);
+
+			Query query = em.createQuery("select e from Eleve e where e.ordinateur.code = :codeOrdi", Eleve.class);
+			
+			query.setParameter("codeOrdi", code);
+			
+			entity = (Eleve) query.getSingleResult();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return entity;
+	}
+
+	@Override
+	public List<Formateur> findAllFormateurByFormation(String client, String promotion) {
+		List<Formateur> liste = new ArrayList<>();
+
+		EntityManager em = null;
+		EntityTransaction tx = null;
+
+		try {
+			em = Application.getInstance().getEmf().createEntityManager();
+			tx = em.getTransaction();
+			tx.begin();
+
+			Query query = em.createQuery("select distinct f from Formation form "
+												+ "join form.matieres m "
+												+ "join m.formateurs f "
+										+ "where form.id.client = :client "
+										+ "and form.id.promotion = :promotion", 
+										Formateur.class);
+			
+			query.setParameter("client", client);
+			
+			query.setParameter("promotion", promotion);
+			
+			liste = query.getResultList();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+
+		return liste;
+	}
 }

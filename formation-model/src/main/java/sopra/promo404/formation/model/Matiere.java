@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "subject")
@@ -19,6 +20,8 @@ public class Matiere {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Version
+	private int version;
 	@Column(name = "name", length = 50)
 	private String nom;
 	@Column(name = "duration")
@@ -26,7 +29,7 @@ public class Matiere {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "difficulty", length = 20)
 	private Difficulte difficulte;
-	@ManyToMany(mappedBy = "matieres", fetch=FetchType.LAZY)
+	@ManyToMany(mappedBy = "matieres", fetch = FetchType.LAZY)
 	private List<Formateur> formateurs = new ArrayList<>();
 
 	public Matiere() {
@@ -46,6 +49,14 @@ public class Matiere {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public String getNom() {
