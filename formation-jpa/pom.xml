@@ -5,7 +5,7 @@
 	<groupId>sopra.promo404</groupId>
 	<artifactId>formation-jpa-ref</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.3-SNAPSHOT</version>
 	<name>formation-jpa</name>
 	<url>http://maven.apache.org</url>
 
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>sopra.promo404</groupId>
 			<artifactId>formation-model-ref</artifactId>
-			<version>1.2-SNAPSHOT</version>
+			<version>1.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
