@@ -10,3 +10,5 @@ formation-model/\.settings/
 formation-model/\.classpath
 
 formation-model/\.project
+
+formation-jpa/target/

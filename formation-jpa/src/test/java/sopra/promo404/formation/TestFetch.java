@@ -22,7 +22,7 @@ public class TestFetch {
 
 		daoMatiere.save(unix);
 
-		Matiere unixFind = daoMatiere.findById(unix.getId());
+		Matiere unixFind = daoMatiere.findById(unix.getId()).get();
 
 		context.close();
 	}

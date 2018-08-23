@@ -21,9 +21,9 @@ public class TestOrdi {
 		Ordinateur ajc134 = new Ordinateur("AJC-134", 8, false);
 		daoOrdinateur.save(ajc134);
 
-		System.out.println("avec ssd : " + daoOrdinateur.findAllBySsd(true).size());
+		System.out.println("avec ssd : " + daoOrdinateur.findBySsd(true).size());
 
-		System.out.println("avec ssd : " + daoOrdinateur.findAllStartingByCode("AJC-13").size());
+		System.out.println("avec ssd : " + daoOrdinateur.findByCodeStartingWith("AJC-13").size());
 
 		context.close();
 	}

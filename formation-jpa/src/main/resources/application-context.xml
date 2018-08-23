@@ -3,16 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- Chargement du ficher data-source.properties en mémoire -->
 	<context:property-placeholder location="classpath:data-source.properties"/>
-
-	<!-- Activation des annotations et précision sur le(s) package(s) à scanner -->
-	<context:component-scan
-		base-package="sopra.promo404.formation.repository" />
+	
+	<!-- Génération des repositories JPA par Spring -->
+	<jpa:repositories base-package="sopra.promo404.formation.repository"/>
 
 	<!-- Datasource avec pooling de connexion -->
 	<bean id="dataSource"
