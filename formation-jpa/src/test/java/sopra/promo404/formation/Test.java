@@ -3,10 +3,8 @@ package sopra.promo404.formation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import sopra.promo404.formation.dao.IDaoFormation;
-import sopra.promo404.formation.dao.IDaoMatiere;
-import sopra.promo404.formation.dao.IDaoOrdinateur;
-import sopra.promo404.formation.dao.IDaoPersonne;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import sopra.promo404.formation.model.Adresse;
 import sopra.promo404.formation.model.Civilite;
 import sopra.promo404.formation.model.Difficulte;
@@ -15,15 +13,21 @@ import sopra.promo404.formation.model.Formateur;
 import sopra.promo404.formation.model.Formation;
 import sopra.promo404.formation.model.Matiere;
 import sopra.promo404.formation.model.Ordinateur;
+import sopra.promo404.formation.repository.IRepositoryFormation;
+import sopra.promo404.formation.repository.IRepositoryMatiere;
+import sopra.promo404.formation.repository.IRepositoryOrdinateur;
+import sopra.promo404.formation.repository.IRepositoryPersonne;
 
 public class Test {
 	public static void main(String[] args) throws ParseException {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:application-context.xml");
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		IDaoFormation daoFormation = Application.getInstance().getDaoFormation();
-		IDaoMatiere daoMatiere = Application.getInstance().getDaoMatiere();
-		IDaoOrdinateur daoOrdinateur = Application.getInstance().getDaoOrdinateur();
-		IDaoPersonne daoPersonne = Application.getInstance().getDaoPersonne();
+		IRepositoryFormation daoFormation = context.getBean(IRepositoryFormation.class);
+		IRepositoryMatiere daoMatiere = context.getBean(IRepositoryMatiere.class);
+		IRepositoryOrdinateur daoOrdinateur = context.getBean(IRepositoryOrdinateur.class);
+		IRepositoryPersonne daoPersonne = context.getBean(IRepositoryPersonne.class);
 		
 		Formation promo404 = new Formation("Sopra Steria", "404");
 		promo404.setDuree(45);
@@ -96,5 +100,7 @@ public class Test {
 		alix.setFormateur(eric);
 		
 		daoPersonne.save(alix);
+		
+		context.close();
 	}
 }

@@ -3,16 +3,20 @@ package sopra.promo404.formation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import sopra.promo404.formation.dao.IDaoPersonne;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import sopra.promo404.formation.model.Adresse;
 import sopra.promo404.formation.model.Civilite;
 import sopra.promo404.formation.model.Eleve;
+import sopra.promo404.formation.repository.IRepositoryPersonne;
 
 public class TestEleve {
 	public static void main(String[] args) throws ParseException {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:application-context.xml");
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-		IDaoPersonne daoPersonne = Application.getInstance().getDaoPersonne();
+		IRepositoryPersonne daoPersonne = context.getBean(IRepositoryPersonne.class);
 
 		Eleve baptiste = new Eleve(Civilite.M, "LALEOUSSE", "Baptiste", sdf.parse("23/11/1993"));
 		baptiste.setAdresse(new Adresse("25 rue ausone", "33520", "Bruges", "France"));
@@ -37,5 +41,7 @@ public class TestEleve {
 		System.out.println("Bordeaux : " + daoPersonne.findAllEleveByVille("bordeaux").size());
 		
 		System.out.println("17/11/1993 : "+daoPersonne.findAllEleveByDtNaissance(sdf.parse("17/11/1993")).size());
+	
+		context.close();
 	}
 }
