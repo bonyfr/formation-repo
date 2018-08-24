@@ -19,8 +19,11 @@ import sopra.promo404.formation.repository.IRepositoryOrdinateur;
 import sopra.promo404.formation.repository.IRepositoryPersonne;
 
 public class Test {
+
 	public static void main(String[] args) throws ParseException {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:application-context.xml");
+		
+		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
