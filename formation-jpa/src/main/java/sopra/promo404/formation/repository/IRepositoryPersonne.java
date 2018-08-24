@@ -31,4 +31,7 @@ public interface IRepositoryPersonne extends JpaRepository<Personne, Long> {
 
 	@Query("select distinct f from Formation form join form.matieres m join m.formateurs f where form.id.client = :client and form.id.promotion = :promotion")
 	List<Formateur> findAllFormateurByFormation(@Param("client") String client, @Param("promotion") String promotion);
+	
+	@Query("select distinct f from Formateur f join fetch f.eleves e where f.id = :id")
+	Formateur findFormateurByIdWithEleves(@Param("id") Long id);
 }
