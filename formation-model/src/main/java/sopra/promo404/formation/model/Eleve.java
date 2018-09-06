@@ -27,10 +27,10 @@ public class Eleve extends Personne {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birthdate")
 	private Date dtNaissance;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "trainer_id")
 	private Formateur formateur;
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "computer_code")
 	private Ordinateur ordinateur;
 

@@ -13,6 +13,16 @@ import sopra.promo404.formation.model.Formateur;
 import sopra.promo404.formation.model.Personne;
 
 public interface IRepositoryPersonne extends JpaRepository<Personne, Long> {
+	
+	@Query("select f from Formateur f")
+	List<Formateur> findAllFormateur();
+	
+	@Query("select distinct e from Eleve e left join fetch e.ordinateur o")
+	List<Eleve> findAllEleveWithOrdinateur();
+	
+	@Query("select e from Eleve e")
+	List<Eleve> findAllEleve();
+	
 	List<Eleve> findAllByCivilite(@Param("civilite") Civilite civilite);
 
 	List<Eleve> findAllByFormateur(@Param("formateur") Formateur formateur);
@@ -34,4 +44,6 @@ public interface IRepositoryPersonne extends JpaRepository<Personne, Long> {
 	
 	@Query("select distinct f from Formateur f join fetch f.eleves e where f.id = :id")
 	Formateur findFormateurByIdWithEleves(@Param("id") Long id);
+	
+
 }
